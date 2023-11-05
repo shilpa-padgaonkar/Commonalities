@@ -1311,7 +1311,7 @@ Request:
 curl -X 'POST' \
   'http://localhost:9091//device-status/v0/subscriptions' \
   -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
+  -H 'Content-Type: application/cloudevents+json' \
   -d
  ```
  ```json 
@@ -1381,9 +1381,10 @@ For consistency across CAMARA APIs, the uniform CloudEvents model must be used w
 | datacontenttype | string | media-type that describes the event payload encoding, must be `application/json` for CAMARA APIs| optional |
 | subject | string | describes the subject of the event - Not used in CAMARA notification. | optional |
 | time | string  date-time| Timestamp of when the occurrence happened. If the time of the occurrence cannot be determined then this attribute MAY be set to some other time (such as the current time) by the CloudEvents producer, however all producers for the same `source` MUST be consistent in this respect. In other words, either they all use the actual time of the occurrence or they all use the same algorithm to determine the value used. (must adhere to CAMARA date-time recommendation based on RFC 3339) | mandatory (*) |
-| data | object| event notification details payload described in each CAMARA API and referenced by its `type` | optional |
+| data | object| event notification details payload described in each CAMARA API and referenced by its `type` | optional (**)|
 
 (*) Note: Attribute  `time` is tagged as optional in CloudEvents specification, but from CAMARA perspective we mandate to value this attributes.
+(**) Note: Attribute  `data` is tagged as optional in CloudEvents specification and in Camara, but Camara subprojects can decide to change this attribute to mandatory if needed.
 
 `data` structure is dependant on each API:
 
